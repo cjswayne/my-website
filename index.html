@@ -4,11 +4,987 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Charles Swayne</title>
+    <title>cjswayne</title>
+    <meta name="description"
+        content="Portfolio of Charles Swayne — Shopify App Developer and Co-owner of JadePuma Apps. MERN stack specialist building public and private Shopify apps.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Charles Swayne | Shopify App Developer">
+    <meta property="og:description"
+        content="Shopify App Developer and Co-owner of JadePuma Apps. MERN stack specialist.">
+    <meta property="og:image" content="assets/headshot.png">
+    <meta property="og:type" content="website">
+
+    <!-- Favicon: ico file with inline SVG fallback -->
+    <link rel="icon" href="assets/headshot-favicon.ico" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== RESET ===== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ===== BASE / TYPOGRAPHY ===== */
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background: #0a0a0a;
+            color: #d0d0d0;
+            line-height: 1.7;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2 {
+            font-family: 'Press Start 2P', monospace;
+            color: #00ff41;
+            text-shadow: 0 0 8px rgba(0, 255, 65, 0.4);
+            line-height: 1.6;
+        }
+
+        h1 {
+            font-size: 1.25rem;
+        }
+
+        h2 {
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px dashed #2a2a2a;
+        }
+
+        h3 {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.7rem;
+            color: #00ff41;
+            text-shadow: 0 0 6px rgba(0, 255, 65, 0.3);
+            line-height: 1.8;
+        }
+
+        a {
+            color: #00ff41;
+            text-decoration: none;
+            transition: color 0.2s, text-shadow 0.2s;
+        }
+
+        a:hover,
+        a:focus-visible {
+            color: #66ff88;
+            text-shadow: 0 0 8px rgba(0, 255, 65, 0.6);
+        }
+
+        a:focus-visible {
+            outline: 2px solid #00ff41;
+            outline-offset: 2px;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        /* ===== SCANLINE OVERLAY ===== */
+        #scanlines {
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: repeating-linear-gradient(to bottom,
+                    transparent 0px,
+                    transparent 2px,
+                    rgba(0, 0, 0, 0.04) 2px,
+                    rgba(0, 0, 0, 0.04) 4px);
+        }
+
+        /* ===== PAGE LAYOUT (flex wrapper) ===== */
+        #page-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ===== SIDEBAR NAV (desktop) ===== */
+        #sidebar {
+            position: sticky;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            flex-shrink: 0;
+            background: #0f0f0f;
+            border-right: 2px solid #1a1a1a;
+            padding: 2rem 1.25rem;
+            overflow-y: auto;
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        /* Wrapper for main + footer, fills remaining space */
+        #content-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 0;
+        }
+
+        .sidebar-title {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.65rem;
+            color: #00ff41;
+            text-shadow: 0 0 6px rgba(0, 255, 65, 0.4);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .sidebar-title .blink {
+            animation: blink 5s step-end infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .sidebar-section-label {
+            font-size: 0.6rem;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 1rem;
+            margin-bottom: 0.25rem;
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        #sidebar a {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            color: #888;
+            font-size: 0.85rem;
+            border-left: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        #sidebar a:hover,
+        #sidebar a:focus-visible {
+            color: #00ff41;
+            border-left-color: #00ff41;
+            background: rgba(0, 255, 65, 0.05);
+        }
+
+        /* ===== MOBILE HEADER ===== */
+        #mobile-header {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background: #0f0f0f;
+            border-bottom: 2px solid #1a1a1a;
+            z-index: 300;
+            align-items: center;
+            padding: 0 1rem;
+        }
+
+        #hamburger {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 4px;
+        }
+
+        #hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: #00ff41;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        #hamburger.open span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        #hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        #hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        #mobile-header .mobile-title {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.55rem;
+            color: #00ff41;
+            margin-left: 1rem;
+        }
+
+        /* Sidebar overlay for mobile */
+        #sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 150;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        #content {
+            width: 100%;
+            max-width: 960px;
+            padding: 2.5rem 3rem;
+        }
+
+        section {
+            margin-bottom: 4rem;
+            scroll-margin-top: 1rem;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            text-align: center;
+            padding: 2rem 0 3rem;
+        }
+
+        .hero-headshot {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 3px solid #00ff41;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.5);
+            object-fit: cover;
+            background: #1a1a1a;
+            margin-bottom: 1.5rem;
+            /* Alt text fallback styling */
+            color: #555;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-subtitle span {
+            color: #00ff41;
+        }
+
+        .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .social-links a {
+            padding: 0.4rem 0.75rem;
+            border: 1px solid #2a2a2a;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .social-links a:hover {
+            border-color: #00ff41;
+            background: rgba(0, 255, 65, 0.08);
+        }
+
+        /* ===== PROJECT CARDS GRID ===== */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        /* ===== PROJECT CARD ===== */
+        .project-card {
+            background: #111;
+            border: 2px solid #1e1e1e;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .project-card:hover {
+            border-color: #00ff41;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.15), inset 0 0 15px rgba(0, 255, 65, 0.03);
+        }
+
+        /* Video walkthrough placeholder - first item */
+        .video-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            border: 1px dashed #2a2a2a;
+            font-size: 0.8rem;
+            color: #888;
+            background: #0a0a0a;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .video-link:hover {
+            color: #00ff41;
+            border-color: #00ff41;
+            background: rgba(0, 255, 65, 0.05);
+        }
+
+        .video-link::before {
+            content: "\25B6";
+            font-size: 0.9rem;
+        }
+
+        /* Card header: logo + name + badge */
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .app-logo {
+            width: 52px;
+            height: 52px;
+            object-fit: contain;
+            /* background: #1a1a1a; */
+            /* border: 2px dashed #2a2a2a; */
+            /* padding: 6px; */
+            flex-shrink: 0;
+            /* Alt text fallback */
+            color: #555;
+            font-size: 0.55rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            border-radius: 8px; 
+        }
+
+        .card-name-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .bfs-badge {
+            height: 30px;
+            width: auto;
+            margin-right:auto;
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: #999;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .store-link {
+            display: inline-block;
+            margin-top: auto;
+            font-size: 0.8rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid #1a1a1a;
+        }
+
+        /* Private app cards - simpler style */
+        .project-card.private-card .card-header {
+            gap: 0;
+        }
+
+        .project-card.private-card {
+            border-style: dashed;
+        }
+
+        /* ===== OTHER WORK ===== */
+        .other-item {
+            background: #111;
+            border: 2px solid #1e1e1e;
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .other-item:hover {
+            border-color: #00ff41;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.15);
+        }
+
+        .other-item .tag {
+            display: inline-block;
+            font-size: 0.65rem;
+            color: #0a0a0a;
+            background: #00ff41;
+            padding: 0.15rem 0.5rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        /* ===== CONTACT SECTION ===== */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .contact-item {
+            border: 2px solid #1e1e1e;
+            padding: 1rem 1.25rem;
+            background: #111;
+            transition: border-color 0.3s;
+        }
+
+        .contact-item:hover {
+            border-color: #00ff41;
+        }
+
+        .contact-item .label {
+            font-size: 0.6rem;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-family: 'Press Start 2P', monospace;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            width: 100%;
+            max-width: 960px;
+            border-top: 2px dashed #1a1a1a;
+            padding: 1.5rem 3rem;
+            text-align: center;
+            color: #555;
+            font-size: 0.8rem;
+            margin-top: auto;
+        }
+
+        .marquee-wrap {
+            overflow: hidden;
+            white-space: nowrap;
+            margin-bottom: 1rem;
+            border: 1px solid #1a1a1a;
+            padding: 0.4rem 0;
+            background: #0f0f0f;
+        }
+
+        .marquee-wrap span {
+            display: inline-block;
+            animation: marquee-scroll 25s linear infinite;
+            font-size: 0.75rem;
+            color: #00ff41;
+        }
+
+        @keyframes marquee-scroll {
+            0% {
+                transform: translateX(100vw);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .visitor-counter {
+            display: inline-block;
+            border: 2px ridge #333;
+            padding: 0.3rem 0.75rem;
+            background: #000;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .visitor-counter .count {
+            color: #00ff41;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.6rem;
+        }
+
+        /* ===== RESPONSIVE (mobile < 768px) ===== */
+        @media (max-width: 768px) {
+            #page-layout {
+                flex-direction: column;
+            }
+
+            #sidebar {
+                position: fixed;
+                left: 0;
+                top: 50px;
+                width: 250px;
+                height: calc(100vh - 50px);
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            #sidebar.open {
+                transform: translateX(0);
+            }
+
+            #mobile-header {
+                display: flex;
+            }
+
+            #content {
+                padding: 70px 1.25rem 2rem;
+                max-width: 100%;
+            }
+
+            section {
+                scroll-margin-top: 60px;
+            }
+
+            footer {
+                padding: 1.5rem 1.25rem;
+                max-width: 100%;
+            }
+
+            h1 {
+                font-size: 0.9rem;
+            }
+
+            h2 {
+                font-size: 0.75rem;
+            }
+
+            h3 {
+                font-size: 0.6rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-headshot {
+                width: 140px;
+                height: 140px;
+            }
+
+            .social-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Tablet breakpoint */
+        @media (min-width: 769px) and (max-width: 1080px) {
+            #content {
+                padding: 2rem 2rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <h1>This is my website</h1>
+
+    <!-- Scanline overlay for CRT effect -->
+    <div id="scanlines" aria-hidden="true"></div>
+
+    <!-- Sidebar overlay (mobile backdrop) -->
+    <div id="sidebar-overlay" aria-hidden="true"></div>
+
+    <!-- Mobile header with hamburger -->
+    <header id="mobile-header">
+        <button id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <span class="mobile-title">cjswayne://portfolio</span>
+    </header>
+
+    <!-- Page layout wrapper: sidebar + content area -->
+    <div id="page-layout">
+
+    <!-- Sidebar navigation -->
+    <nav id="sidebar" aria-label="Main navigation">
+        <div class="sidebar-title">
+            cjswayne://portfolio
+        </div>
+
+        <span class="sidebar-section-label">Navigate</span>
+        <a href="#about">About</a>
+        <a href="#public-apps">Public Apps</a>
+        <a href="#private-apps">Private Apps</a>
+        <a href="#other-work">Other Work</a>
+        <a href="#contact">Contact</a>
+
+        <span class="sidebar-section-label" style="margin-top: auto;">Links</span>
+        <a href="https://github.com/cjswayne" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/charles-swayne/" target="_blank" rel="noopener">LinkedIn</a>
+    </nav>
+
+    <!-- Content wrapper: centers main + footer in remaining space -->
+    <div id="content-wrapper">
+
+    <!-- Main content area -->
+    <main id="content">
+
+        <!-- ===== HERO ===== -->
+        <section id="about" class="hero">
+            <img src="assets/headshot.png" alt="Charles Swayne headshot -- Shopify App Developer"
+                class="hero-headshot">
+            <h1>Shopify App Developer<br>Co-owner of JadePuma Apps</h1>
+            <p class="hero-subtitle">
+                Tech Stack: <span>M</span>ongoDB &middot; <span>E</span>xpress &middot;
+                <span>R</span>eact &middot; <span>N</span>ode.js
+            </p>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/charles-swayne/" target="_blank" rel="noopener">[ LinkedIn ]</a>
+                <a href="https://github.com/cjswayne" target="_blank" rel="noopener">[ GitHub ]</a>
+                <a href="mailto:charles@jadepuma.com">[ Email ]</a>
+                <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3viELRfh3O4y5EkS2RqhoR3teUuOz5raR6viJ13uS8S_y4k4aZQp1vZXEfdDcrir6ECxQeoCYm"
+                    target="_blank" rel="noopener">[ Schedule a Meeting ]</a>
+            </div>
+        </section>
+
+        <!-- ===== PUBLIC SHOPIFY APPS ===== -->
+        <section id="public-apps">
+            <h2>&gt; Public Shopify Apps</h2>
+            <div class="cards-grid">
+
+                <!-- 1. Brand It! Calendar -->
+                <article class="project-card">
+                    <a href="https://www.loom.com/share/bdec11b45bba4db587602acaec0387e6" class="video-link" target="_blank">Video Walkthrough</a>
+                    <div class="card-header">
+                        <img src="assets/brand-it-calendar-logo.png" alt="Brand It Calendar app logo" class="app-logo">
+                        <div class="card-name-group">
+                            <h3>Brand It! Calendar</h3>
+                            <img src="assets/badge-built-for-shopify-dark.svg" alt="Built for Shopify badge"
+                                class="bfs-badge">
+                        </div>
+                    </div>
+                    <p class="card-desc">Embed your calendars right into your store -- live, branded, and fully styled
+                        to match your look.</p>
+                    <a href="https://apps.shopify.com/brand-it-calendar" target="_blank" rel="noopener"
+                        class="store-link">View on Shopify App Store &rarr;</a>
+                </article>
+
+                <!-- 2. Badgezilla -->
+                <article class="project-card">
+                    <a href="https://www.loom.com/share/f61dac12d8a84a509a56d605d03450a1" class="video-link" target="_blank">Video Walkthrough</a>
+                    <div class="card-header">
+                        <img src="assets/Badgezilla-Icon.png" alt="Badgezilla app logo" class="app-logo">
+                        <div class="card-name-group">
+                            <h3>Badgezilla</h3>
+                            <img src="assets/badge-built-for-shopify-dark.svg" alt="Built for Shopify badge"
+                                class="bfs-badge">
+                        </div>
+                    </div>
+                    <p class="card-desc">Add eye-catching product badges and labels to boost conversions in your Shopify
+                        store.</p>
+                    <a href="https://apps.shopify.com/badgezilla" target="_blank" rel="noopener"
+                        class="store-link">View on Shopify App Store &rarr;</a>
+                </article>
+
+                <!-- 3. Datify -->
+                <article class="project-card">
+                    <a href="https://www.loom.com/share/b18b5df109dd41aa9dd0e490192da5d2" class="video-link" target="_blank">Video Walkthrough</a>
+                    <div class="card-header">
+                        <img src="assets/datify-logo.png" alt="Datify app logo" class="app-logo">
+                        <div class="card-name-group">
+                            <h3>Datify</h3>
+                        </div>
+                    </div>
+                    <p class="card-desc">Date-based formatting and customization tools for your Shopify storefront.</p>
+                    <a href="https://apps.shopify.com/datify" target="_blank" rel="noopener" class="store-link">View on
+                        Shopify App Store &rarr;</a>
+                </article>
+
+                <!-- 4. Customer Accounts Toolbox -->
+                <article class="project-card">
+                    <a href="#" class="video-link">Video Walkthrough (Coming Soon)</a>
+                    <div class="card-header">
+                        <img src="assets/customer-accounts-toolbox-logo.png" alt="Customer Accounts Toolbox app logo"
+                            class="app-logo">
+                        <div class="card-name-group">
+                            <h3>Customer Accounts Toolbox</h3>
+                        </div>
+                    </div>
+                    <p class="card-desc">Enhanced customer account pages with additional features and customization
+                        options.</p>
+                    <a href="https://apps.shopify.com/account-pages-toolbox" target="_blank" rel="noopener"
+                        class="store-link">View on Shopify App Store &rarr;</a>
+                </article>
+
+                <!-- 5. Flex Theme Sections -->
+                <article class="project-card">
+                    <a href="#" class="video-link">Video Walkthrough (Coming Soon)</a>
+                    <div class="card-header">
+                        <img src="assets/flex-theme-sections-logo.png" alt="Flex Theme Sections app logo"
+                            class="app-logo">
+                        <div class="card-name-group">
+                            <h3>Flex Theme Sections</h3>
+                        </div>
+                    </div>
+                    <p class="card-desc">Flexible, drag-and-drop theme sections for Shopify Online Store 2.0 themes.
+                    </p>
+                    <a href="https://apps.shopify.com/flex-theme-sections" target="_blank" rel="noopener"
+                        class="store-link">View on Shopify App Store &rarr;</a>
+                </article>
+
+                <!-- 6. Enterprise Theme Sections -->
+                <article class="project-card">
+                    <div class="card-header">
+                        <img src="assets/flex-theme-sections-logo.png"
+                            alt="Enterprise Theme Sections app logo" class="app-logo">
+                        <div class="card-name-group">
+                            <h3>Enterprise Theme Sections</h3>
+                        </div>
+                    </div>
+                    <p class="card-desc">Premium, enterprise-grade theme sections for large-scale Shopify stores.</p>
+                    <a href="https://apps.shopify.com/enterprise-theme-sections" target="_blank" rel="noopener"
+                        class="store-link">View on Shopify App Store &rarr;</a>
+                </article>
+
+                <!-- 7. JadePuma Backups -->
+                <article class="project-card">
+                    <div class="card-header">
+                        <img src="assets/jadepuma-backups-logo.png" alt="JadePuma Backups app logo" class="app-logo">
+                        <div class="card-name-group">
+                            <h3>JadePuma Backups</h3>
+                        </div>
+                    </div>
+                    <p class="card-desc">Automated backup solution to protect your Shopify store data.</p>
+                    <a href="https://apps.shopify.com/jadepuma-backups" target="_blank" rel="noopener"
+                        class="store-link">View on Shopify App Store &rarr;</a>
+                </article>
+
+                <!-- 8. Linear Shopping Experiences -->
+                <article class="project-card">
+                    <div class="card-header">
+                        <img src="assets/linear-shopping-experiences-logo.png"
+                            alt="Linear Shopping Experiences app logo" class="app-logo">
+                        <div class="card-name-group">
+                            <h3>Linear Shopping Experiences</h3>
+                        </div>
+                    </div>
+                    <p class="card-desc">Guided, step-by-step shopping flows that streamline the customer journey.</p>
+                    <a href="https://apps.shopify.com/linear-shopping-experience" target="_blank" rel="noopener"
+                        class="store-link">View on Shopify App Store &rarr;</a>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- ===== PRIVATE APPS ===== -->
+        <section id="private-apps">
+            <h2>&gt; Private Apps</h2>
+            <div class="cards-grid">
+
+                <!-- 1. AVP Product Management -->
+                <article class="project-card private-card">
+                    <a href="#" class="video-link">Video Walkthrough (Coming Soon)</a>
+                    <div class="card-header">
+                        <div class="card-name-group">
+                            <h3>AVP Product Management</h3>
+                        </div>
+                    </div>
+                    <p class="card-desc">Internal product management and organization tool.</p>
+                </article>
+
+                <!-- 2. JP Event Generator -->
+                <article class="project-card private-card">
+                    <a href="#" class="video-link">Video Walkthrough (Coming Soon)</a>
+                    <div class="card-header">
+                        <div class="card-name-group">
+                            <h3>JP Event Generator</h3>
+                        </div>
+                    </div>
+                    <p class="card-desc">Automated event creation and scheduling system.</p>
+                </article>
+
+                <!-- 3. JP Certificate Exporter -->
+                <article class="project-card private-card">
+                    <a href="#" class="video-link">Video Walkthrough (Coming Soon)</a>
+                    <div class="card-header">
+                        <div class="card-name-group">
+                            <h3>JP Certificate Exporter</h3>
+                        </div>
+                    </div>
+                    <p class="card-desc">Certificate generation and PDF export tool.</p>
+                </article>
+
+                <!-- 4. JP Jukebox Strip Generator -->
+                <article class="project-card private-card">
+                    <a href="#" class="video-link">Video Walkthrough (Coming Soon)</a>
+                    <div class="card-header">
+                        <div class="card-name-group">
+                            <h3>JP Jukebox Strip Generator</h3>
+                        </div>
+                    </div>
+                    <p class="card-desc">Jukebox strip design and print-ready generation tool.</p>
+                </article>
+
+                <!-- 5. Sail 50 Booking -->
+                <article class="project-card private-card">
+                    <a href="#" class="video-link">Video Walkthrough (Coming Soon)</a>
+                    <div class="card-header">
+                        <div class="card-name-group">
+                            <h3>Sail 50 Booking</h3>
+                        </div>
+                    </div>
+                    <p class="card-desc">Booking and reservation management system.</p>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- ===== OTHER WORK ===== -->
+        <section id="other-work">
+            <h2>&gt; Other Work</h2>
+
+            <!-- Polaris Web Components Intellisense -->
+            <article class="other-item">
+                <a href="#" class="video-link">Video Walkthrough (Coming Soon)</a>
+                <div style="margin-top: 0.75rem;">
+                    <span class="tag">VS Code Extension</span>
+                    <h3>Polaris Web Components Intellisense</h3>
+                    <p class="card-desc">
+                        VS Code extension providing IntelliSense for Shopify Polaris Web Components -- autocomplete,
+                        hover docs, and attribute suggestions.
+                    </p>
+                    <a href="https://github.com/cjswayne/shopify-polaris-wc-intellisense" target="_blank"
+                        rel="noopener">View on GitHub &rarr;</a>
+                </div>
+            </article>
+
+            <!-- Podcast Feature -->
+            <article class="other-item">
+                <a href="https://www.youtube.com/watch?v=zwUtmcZzHA0&list=PLMbUVx8fOC6-WqP4v4VSVRXncKwOArDo1&index=3"
+                    target="_blank" rel="noopener" class="video-link">Watch Podcast Episode</a>
+                <div style="margin-top: 0.75rem;">
+                    <span class="tag">Podcast</span>
+                    <h3>Featured Podcast Appearance</h3>
+                    <p class="card-desc">
+                        Discussing Shopify app development, the MERN stack, and lessons learned building apps at
+                        JadePuma.
+                    </p>
+                    <a href="https://www.youtube.com/watch?v=zwUtmcZzHA0&list=PLMbUVx8fOC6-WqP4v4VSVRXncKwOArDo1&index=3"
+                        target="_blank" rel="noopener">Watch on YouTube &rarr;</a>
+                </div>
+            </article>
+        </section>
+
+        <!-- ===== CONTACT ===== -->
+        <section id="contact">
+            <h2>&gt; Contact</h2>
+            <div class="contact-grid">
+
+                <a href="mailto:charles@jadepuma.com" class="contact-item">
+                    <div class="label">Email</div>
+                    <span>charles@jadepuma.com</span>
+                </a>
+
+                <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3viELRfh3O4y5EkS2RqhoR3teUuOz5raR6viJ13uS8S_y4k4aZQp1vZXEfdDcrir6ECxQeoCYm"
+                    target="_blank" rel="noopener" class="contact-item">
+                    <div class="label">Schedule</div>
+                    <span>Book a Meeting</span>
+                </a>
+
+                <a href="https://www.linkedin.com/in/charles-swayne/" target="_blank" rel="noopener"
+                    class="contact-item">
+                    <div class="label">LinkedIn</div>
+                    <span>charles-swayne</span>
+                </a>
+
+                <a href="https://github.com/cjswayne" target="_blank" rel="noopener" class="contact-item">
+                    <div class="label">GitHub</div>
+                    <span>cjswayne</span>
+                </a>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <p style="margin-top: 1rem;">&copy; 2026 Charles Swayne. Thanks for making it this far!</p>
+    </footer>
+
+    </div><!-- /#content-wrapper -->
+    </div><!-- /#page-layout -->
+
+    <script>
+        // Sidebar toggle for mobile
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+
+        const toggleSidebar = () => {
+            const isOpen = sidebar.classList.toggle('open');
+            hamburger.classList.toggle('open');
+            hamburger.setAttribute('aria-expanded', isOpen);
+            overlay.style.display = isOpen ? 'block' : 'none';
+        };
+
+        hamburger.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
+
+        // Close sidebar when a nav link is clicked (mobile)
+        sidebar.querySelectorAll('a[href^="#"]').forEach((link) => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    toggleSidebar();
+                }
+            });
+        });
+
+        // Randomize visitor counter on load for retro flavor
+        const counterEl = document.getElementById('visitor-count');
+        const base = 4782;
+        const jitter = Math.floor(Math.random() * 200);
+        counterEl.textContent = String(base + jitter).padStart(6, '0');
+    </script>
+
 </body>
 
 </html>

@@ -314,6 +314,9 @@
         }
 
         .social-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
             padding: 0.4rem 0.75rem;
             border: 1px solid #2a2a2a;
             font-size: 0.8rem;
@@ -323,6 +326,12 @@
         .social-links a:hover {
             border-color: #00ff41;
             background: rgba(0, 255, 65, 0.08);
+        }
+
+        .icon {
+            width: 12px;
+            height: 12px;
+            flex: 0 0 auto;
         }
 
         /* ===== PROJECT CARDS GRID ===== */
@@ -479,12 +488,23 @@
         }
 
         .contact-item .label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             font-size: 0.6rem;
             color: #555;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             font-family: 'Press Start 2P', monospace;
             margin-bottom: 0.5rem;
+        }
+
+        .contact-item .label .icon {
+            color: #00ff41;
+        }
+
+        .contact-item:hover .label .icon {
+            color: #66ff88;
         }
 
         /* ===== FOOTER ===== */
@@ -680,11 +700,42 @@
                 Hi i'm Charles! I've been programming since I was fifteen (shoutout python) and started working at a shopify agency as a web developer out of highschool. About six months into this new job, I decided to take a full stack development bootcamp at Rutgers University. From this I had the rudimentary skills to start building shopify apps, and 2 years later, here we are! 
             </p>
             <div class="social-links">
-                <a href="https://www.linkedin.com/in/charles-swayne/" target="_blank" rel="noopener">[ LinkedIn ]</a>
-                <a href="https://github.com/cjswayne" target="_blank" rel="noopener">[ GitHub ]</a>
-                <a href="mailto:charles@jadepuma.com">[ Email ]</a>
+                <a href="https://www.linkedin.com/in/charles-swayne/" target="_blank" rel="noopener">
+                    <svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                        <rect x="2" y="9" width="4" height="12"></rect>
+                        <circle cx="4" cy="4" r="2"></circle>
+                    </svg>
+                    <span>[ LinkedIn ]</span>
+                </a>
+                <a href="https://github.com/cjswayne" target="_blank" rel="noopener">
+                    <svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7a3.37 3.37 0 0 0-.94 2.61V22"></path>
+                    </svg>
+                    <span>[ GitHub ]</span>
+                </a>
+                <a href="mailto:charles@jadepuma.com">
+                    <svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22 6 12 13 2 6"></polyline>
+                    </svg>
+                    <span>[ Email ]</span>
+                </a>
                 <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3viELRfh3O4y5EkS2RqhoR3teUuOz5raR6viJ13uS8S_y4k4aZQp1vZXEfdDcrir6ECxQeoCYm"
-                    target="_blank" rel="noopener">[ Schedule a Meeting ]</a>
+                    target="_blank" rel="noopener">
+                    <svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span>[ Schedule a Meeting ]</span>
+                </a>
             </div>
         </section>
 
@@ -807,7 +858,7 @@
 
                 <!-- 1. AVP Product Management -->
                 <article class="project-card private-card">
-                    <a href="#" class="video-link">Video Walkthrough (Coming Soon)</a>
+                    <a href="https://www.loom.com/share/700d9459d21e4a93a6bb1b5071ba59ee" class="video-link" target="_blank">Video Walkthrough</a>
                     <div class="card-header">
                         <div class="card-name-group">
                             <h3>AVP Product Management</h3>
@@ -904,24 +955,55 @@
             <div class="contact-grid">
 
                 <a href="mailto:charles@jadepuma.com" class="contact-item">
-                    <div class="label">Email</div>
+                    <div class="label">
+                        <svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22 6 12 13 2 6"></polyline>
+                        </svg>
+                        Email
+                    </div>
                     <span>charles@jadepuma.com</span>
                 </a>
 
                 <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3viELRfh3O4y5EkS2RqhoR3teUuOz5raR6viJ13uS8S_y4k4aZQp1vZXEfdDcrir6ECxQeoCYm"
                     target="_blank" rel="noopener" class="contact-item">
-                    <div class="label">Schedule</div>
+                    <div class="label">
+                        <svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        Schedule
+                    </div>
                     <span>Book a Meeting</span>
                 </a>
 
                 <a href="https://www.linkedin.com/in/charles-swayne/" target="_blank" rel="noopener"
                     class="contact-item">
-                    <div class="label">LinkedIn</div>
+                    <div class="label">
+                        <svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                        LinkedIn
+                    </div>
                     <span>charles-swayne</span>
                 </a>
 
                 <a href="https://github.com/cjswayne" target="_blank" rel="noopener" class="contact-item">
-                    <div class="label">GitHub</div>
+                    <div class="label">
+                        <svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7a3.37 3.37 0 0 0-.94 2.61V22"></path>
+                        </svg>
+                        GitHub
+                    </div>
                     <span>cjswayne</span>
                 </a>
 
